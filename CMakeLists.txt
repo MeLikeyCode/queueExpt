@@ -1,7 +1,4 @@
-﻿# CMakeList.txt : CMake project for queueExpt, include source and define
-# project specific logic here.
-#
-cmake_minimum_required (VERSION 3.13)
+﻿cmake_minimum_required (VERSION 3.13)
 
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
@@ -11,27 +8,29 @@ endif()
 
 project ("queueExpt")
 
-# Add source to this project's executable.
-add_executable (queueExpt "main.cpp")
+include_directories("include") # adds an include path to all targets
 
-if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET queueExpt PROPERTY CXX_STANDARD 20)
-endif()
+file(GLOB SOURCES "src/*.cpp")
+add_executable (queueExpt ${SOURCES})
+
+set_property(TARGET queueExpt PROPERTY CXX_STANDARD 20)
 
 # Add tests and install targets if needed.
 
+# allows fetching libraries from the internet
 Include(FetchContent)
 
+# we declare that we would like to fetch catch2 from github
 FetchContent_Declare(
   Catch2
   GIT_REPOSITORY https://github.com/catchorg/Catch2.git
   GIT_TAG        v3.0.1 # or a later release
 )
 
+# we actually fetch catch2
 FetchContent_MakeAvailable(Catch2)
 
-add_executable(tests test.cpp "benchmark.cpp")
-target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+add_executable(test "test/test.cpp" "test/benchmark.cpp")
 
-# add --benchmark command line argumet to debugger when debugging tests target
-#set_property(TARGET tests PROPERTY VS_DEBUGGER_COMMAND "[!benchmark]")
+# This will 1) add catch2 headers to the include path and 2) link with catch2's static lib
+target_link_libraries(test PRIVATE Catch2::Catch2WithMain) 

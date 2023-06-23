@@ -7,22 +7,21 @@
 #include "CircularBufferQueue.h"
 
 TEST_CASE("CircularBufferQueue") {
-	CircularBufferQueue<int> queue{10};
+	CircularBufferQueue<int> queue{};
 	REQUIRE(queue.size() == 0);
-	REQUIRE(queue.maxSize() == 10);
 
 	SECTION("adding items behaves properly") {
 		queue.push_back(1);
 		CHECK(queue.size() == 1);
-		CHECK(queue.peek() == 1);
+		CHECK(queue.front() == 1);
 
 		queue.push_back(2);
 		CHECK(queue.size() == 2);
-		CHECK(queue.peek() == 1);
+		CHECK(queue.front() == 1);
 
 		queue.push_back(3);
 		CHECK(queue.size() == 3);
-		CHECK(queue.peek() == 1);
+		CHECK(queue.front() == 1);
 	}
 
 	SECTION("removing items behaves properly") {
@@ -30,13 +29,13 @@ TEST_CASE("CircularBufferQueue") {
 		queue.push_back(2);
 		queue.push_back(3);
 
-		CHECK(queue.peek() == 1);
+		CHECK(queue.front() == 1);
 		queue.pop_front();
-		CHECK(queue.peek() == 2);
+		CHECK(queue.front() == 2);
 		CHECK(queue.size() == 2);
 
 		queue.pop_front();
-		CHECK(queue.peek() == 3);
+		CHECK(queue.front() == 3);
 		CHECK(queue.size() == 1);
 
 		queue.pop_front();
@@ -55,7 +54,7 @@ TEST_CASE("CircularBufferQueue") {
 			// remove all items
 			for (size_t i = 0; i < 10; i++)
 			{
-				CHECK(queue.peek() == i);
+				CHECK(queue.front() == i);
 				queue.pop_front();
 			}
 		}
