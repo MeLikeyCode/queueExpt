@@ -1,10 +1,10 @@
-An experiment with writing a custom queue that is faster than std::queue. The custom queue is a circular buffer queue.
+An experiment with writing a custom queue that is faster than std::queue (for my use case). The custom queue is a circular buffer queue.
 
 ![](docs/time_ratio.png)
 
-There are two versions of the custom queue. One is fixed size, the other can dynamically grow. The dynamically growable one is about **1.3 times** faster than std::queue. The fixed size one is about **1.5 times** faster than std::queue.
+There are two versions of the custom queue. One is fixed size, the other can dynamically grow. The dynamically growable one is about **30%** faster than std::queue. The fixed size one is about **50%** faster than std::queue.
 
-The fixed version is about **1.16 times** faster than the non-fixed version.
+The fixed version is about **16%** faster than the non-fixed version.
 
 # Files
 - `benchmark.cpp` - Contains benchmarking code. Uses catch2's benchmarking functionality to measure how long push()/peek()/pop() operations take in std::queue and in the custom queue(s).
